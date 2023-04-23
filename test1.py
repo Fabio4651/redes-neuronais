@@ -19,7 +19,7 @@ all_inputs = []
 all_targets = []
 
 
-# print(population)
+print(population)
 
 
 def population_gen(population):
@@ -55,7 +55,7 @@ net.set_halt_on_extremes(True)
 #       Just to show we can
 net.set_random_constraint(.5)
 net.set_learnrate(.1)
-#
+
 net.set_all_inputs(all_inputs)
 net.set_all_targets(all_targets)
 
@@ -81,26 +81,26 @@ allactuals = [item[1][0] for item in net.test_targets_activations]
 # print(allactuals)
 
 #   This is quick and dirty, but it will show the results
-subplot(3, 1, 1)
-plot([i[1] for i in population])
-title("Energy consumption Forecast for the next 12 Hours")
-grid(True)
+# subplot(3, 1, 1)
+# plot([i[1] for i in population])
+# title("Energy consumption Forecast for the next 12 Hours")
+# grid(True)
 
-subplot(3, 1, 2)
-plot(test_positions, all_targets1, 'bo', label='targets')
-plot(test_positions, allactuals, 'ro', label='actuals')
-grid(True)
-legend(loc='lower left', numpoints=1)
-title("Test Target Points vs Actual Points")
+# subplot(3, 1, 2)
+# plot(test_positions, all_targets1, 'bo', label='targets')
+# plot(test_positions, allactuals, 'ro', label='actuals')
+# grid(True)
+# legend(loc='lower left', numpoints=1)
+# title("Test Target Points vs Actual Points")
 
-subplot(3, 1, 3)
-plot(range(1, len(net.accum_mse) + 1, 1), net.accum_mse)
-xlabel('epochs')
-ylabel('mean squared error')
-grid(True)
-title("Mean Squared Error by Epoch")
+# subplot(3, 1, 3)
+# plot(range(1, len(net.accum_mse) + 1, 1), net.accum_mse)
+# xlabel('epochs')
+# ylabel('mean squared error')
+# grid(True)
+# title("Mean Squared Error by Epoch")
 
-show()
+# show()
 
 
 plt.subplot(3, 1, 1)
