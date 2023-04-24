@@ -19,7 +19,7 @@ all_inputs = []
 all_targets = []
 
 
-print(population)
+# print(population)
 
 
 def population_gen(population):
