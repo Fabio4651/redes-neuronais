@@ -22,6 +22,7 @@ all_targets = []
 # print(population)
 
 
+
 def population_gen(population):
     """
     This function shuffles the values of the population and yields the
@@ -34,6 +35,10 @@ def population_gen(population):
 
     for item in pop_sort:
         yield item
+        
+# f = open("population.txt", "w")  
+# f.write(population)     
+# f.close() 
 
 
 #   Build the inputs
@@ -41,10 +46,12 @@ for position, target in population_gen(population):
     pos = float(position)
     all_inputs.append([random.random(), pos * factor])
     all_targets.append([target])
+    
+# print(all_targets)    
 
 net = NeuralNet()
 
-# print(net)
+#print(population)
 
 net.init_layers(2, [10], 1)
 
@@ -60,17 +67,20 @@ net.set_all_inputs(all_inputs)
 net.set_all_targets(all_targets)
 
 length = len(all_inputs)
-learn_end_point = int(length * .8)
+learn_end_point = int(length * .6)
+test_end_point = int(length * .2)
 
 net.set_learn_range(0, learn_end_point)
-net.set_test_range(learn_end_point + 1, length - 1)
+net.set_test_range(learn_end_point + 1, length - test_end_point)
+net.set_validation_range(length - test_end_point + 1 , length - 1)
 
 net.layers[1].set_activation_type('tanh')
 
-net.learn(epochs=48, show_epoch_results=True,
-          random_testing=False)
+net.learn(epochs=12, show_epoch_results=True, random_testing=False)
 
 mse = net.test()
+
+mse2 = net.validate()
 
 test_positions = [item[0][1] * 1000.0 for item in net.get_test_data()]
 
@@ -86,12 +96,12 @@ allactuals = [item[1][0] for item in net.test_targets_activations]
 # title("Energy consumption Forecast for the next 12 Hours")
 # grid(True)
 
-# subplot(3, 1, 2)
-# plot(test_positions, all_targets1, 'bo', label='targets')
-# plot(test_positions, allactuals, 'ro', label='actuals')
-# grid(True)
-# legend(loc='lower left', numpoints=1)
-# title("Test Target Points vs Actual Points")
+subplot(3, 1, 2)
+plot(test_positions, all_targets1, 'bo', label='targets')
+plot(test_positions, allactuals, 'ro', label='actuals')
+grid(True)
+legend(loc='lower left', numpoints=1)
+title("Test Target Points vs Actual Points")
 
 # subplot(3, 1, 3)
 # plot(range(1, len(net.accum_mse) + 1, 1), net.accum_mse)
@@ -100,14 +110,14 @@ allactuals = [item[1][0] for item in net.test_targets_activations]
 # grid(True)
 # title("Mean Squared Error by Epoch")
 
-# show()
+show()
 
 
-plt.subplot(3, 1, 1)
-plt.plot([i[1] for i in population])
-plt.title("Population")
-plt.grid(True)
+# plt.subplot(3, 1, 1)
+# plt.plot([i[1] for i in population])
+# plt.title("Population")
+# plt.grid(True)
 
 
 
-#plt.show()
+# plt.show()
